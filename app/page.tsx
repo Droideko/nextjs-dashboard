@@ -1,10 +1,26 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { lusitana } from './ui/fonts';
-import Image from 'next/image';
+import AcmeLogo from "@/app/ui/acme-logo";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { lusitana } from "./ui/fonts";
+import Image from "next/image";
+import { neon } from "@neondatabase/serverless";
 
 export default function Page() {
+  async function create() {
+    "use server";
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    // Insert the comment from the form into the Postgres database
+    const data = await sql(`
+      SELECT invoices.amount, customers.name
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      WHERE invoices.amount = 666;
+    `);
+    console.log(data);
+  }
+
+  create();
+
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="flex h-20 shrink-0 items-end rounded-lg p-4 bg-blue-500 md:h-52">
@@ -16,7 +32,7 @@ export default function Page() {
           <p
             className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
           >
-            <strong>Welcome to Acme.</strong> This is the example for the{' '}
+            <strong>Welcome to Acme.</strong> This is the example for the{" "}
             <a href="https://nextjs.org/learn/" className="text-blue-500">
               Next.js Learn Course
             </a>
