@@ -1,7 +1,3 @@
-export default async function Page(props) {
-  const t = await props.params;
-
-  console.log(t);
-
+export default async function Page() {
   return <p>Customers Page</p>;
 }

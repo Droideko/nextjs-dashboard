@@ -1,8 +1,6 @@
 import {
   CustomerField,
-  CustomersTableType,
   InvoiceForm,
-  InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
 } from "./definitions";
@@ -96,7 +94,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable[]>`
+    const invoices = await sql`
       SELECT
         invoices.id,
         invoices.amount,
@@ -189,7 +187,7 @@ export async function fetchCustomers() {
 
 export async function fetchFilteredCustomers(query: string) {
   try {
-    const data = await sql<CustomersTableType[]>`
+    const data = await sql`
 		SELECT
 		  customers.id,
 		  customers.name,
